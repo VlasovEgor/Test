@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 924555174366126092}
   - component: {fileID: 7129156587402638794}
   - component: {fileID: 6757758598802435537}
-  - component: {fileID: 8272968714186617869}
+  - component: {fileID: -8684897673488770054}
   m_Layer: 0
   m_Name: DeadZone
   m_TagString: Untagged
@@ -98,7 +98,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &8272968714186617869
+--- !u!114 &-8684897673488770054
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,8 +107,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 987783847198756825}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cfe1e10293f2a747b4e8b675941c99d, type: 3}
+  m_Script: {fileID: 11500000, guid: f4bd4a98a8ddfb740b09b85972e3dafe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
   _distanceToDeath: 1.5
+  _animator: {fileID: 0}
+  animation: 1

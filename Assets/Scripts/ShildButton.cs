@@ -7,7 +7,8 @@ public class ShildButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {   
 
     public bool isHold = false;
-    [SerializeField] private Player _player;
+    [SerializeField] private PlayerNew _player;
+
 
     public void OnPointerDown(PointerEventData pointerEventData)
     { 
