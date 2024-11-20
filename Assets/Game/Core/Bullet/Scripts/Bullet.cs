@@ -5,16 +5,28 @@ public sealed class Bullet : MonoBehaviour
 {
     public event Action<Bullet> BulletOff;
 
-    public Vector3 Position => transform.position;
-
     [SerializeField] private int _damage;
     [SerializeField] private float _speed = 3;
     [Space]
     [SerializeField] private Rigidbody2D _rigidbody2D;
-    
-    public void SetActive(bool isActive)
+    [SerializeField] private Timer _timer;
+
+    private void Start()
     {
-        gameObject.SetActive(isActive);
+        _timer.OnEnded += Disable;
+    }
+
+    private void OnDestroy()
+    {
+        _timer.OnEnded -= Disable;
+    }
+
+    public void Activate()
+    {
+        gameObject.SetActive(true);
+        
+        _timer.ResetTime();
+        _timer.Play();
     }
 
     public void SetPosition(Vector3 position)
@@ -27,7 +39,7 @@ public sealed class Bullet : MonoBehaviour
         _rigidbody2D.velocity = velocity.normalized * _speed;
     }
 
-    public void Disable()
+    private void Disable()
     {
         gameObject.SetActive(false);
         BulletOff?.Invoke(this);
@@ -43,10 +55,10 @@ public sealed class Bullet : MonoBehaviour
 
     private void DealDamage(Entity entity)
     {
-        var damageable = entity.Get<Health>();
-        if (damageable != null)
+        var health = entity.Get<Health>();
+        if (health != null)
         {
-            damageable.TakeDamage(_damage);
+            health.TakeDamage(_damage);
             BulletOff?.Invoke(this);
         }
     }

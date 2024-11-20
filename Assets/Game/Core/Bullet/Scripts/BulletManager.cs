@@ -33,9 +33,9 @@ public class BulletManager : MonoBehaviour
 
         for (int i = 0; i < activeBullet.Count; i++)
         {
-            if (_levelBounds.InBounds(activeBullet[i].Position) == false)
+            if (_levelBounds.InBounds(activeBullet[i].transform.position) == false)
             {
-                activeBullet[i].Disable();
+                activeBullet[i].transform.position = _levelBounds.NewPosition(activeBullet[i].transform.position);
             }
         }
     }
@@ -43,7 +43,7 @@ public class BulletManager : MonoBehaviour
     public Bullet SpawnBullet(Vector2 position)
     {
         Bullet bullet = _bulletPool.GetObject();
-        bullet.SetActive(true);
+        bullet.Activate();
         bullet.SetPosition(position);
         bullet.BulletOff += RemoveBullet;
 
