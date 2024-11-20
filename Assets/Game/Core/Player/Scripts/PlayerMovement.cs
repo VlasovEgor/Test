@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Zenject;
 
@@ -25,7 +24,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_levelBounds.InBounds(_transform.position) == false)
         {   
-            Debug.Log("ABOBA");
             _transform.position = _levelBounds.NewPosition(_transform.position);
         }
     }

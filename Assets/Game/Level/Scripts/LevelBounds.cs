@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 using Zenject;
 
 public sealed class LevelBounds: IInitializable
@@ -27,11 +26,17 @@ public sealed class LevelBounds: IInitializable
 
     public Vector3 NewPosition(Vector3 position)
     {
-        var newPosition = new Vector3(_bounds.max.x - position.x,
-            _bounds.max.y - position.y ,
-            _bounds.max.z - position.z
-        );
+        Vector3 newPosition = position;
+        
+        newPosition.x = Wrap(newPosition.x, _bounds.min.x, _bounds.max.x);
+        newPosition.y = Wrap(newPosition.y, _bounds.min.y, _bounds.max.y);
 
         return newPosition;
+    }
+    
+    private float Wrap(float value, float min, float max)
+    {
+        float range = max - min;
+        return min + (value - min + range) % range;
     }
 }
