@@ -30,7 +30,7 @@ public sealed class EnemyManager : MonoBehaviour
         enemy.Transform.position = spawnPosition.position;
 
         Transform attackPosition = RandomPoint(_attackPositions);
-        enemy.Get<EnemyMovementBehaviour>().SetDestination(attackPosition.position);
+        enemy.Get<EnemyMovement>().SetDestination(attackPosition.position);
     }
 
     private Transform RandomPoint(Transform[] points)

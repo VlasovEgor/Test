@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 using Zenject;
 
 public sealed class LevelBounds: IInitializable
@@ -22,5 +23,15 @@ public sealed class LevelBounds: IInitializable
     public bool InBounds(Vector3 position)
     {
         return _bounds.Contains(position);
+    }
+
+    public Vector3 NewPosition(Vector3 position)
+    {
+        var newPosition = new Vector3(_bounds.max.x - position.x,
+            _bounds.max.y - position.y ,
+            _bounds.max.z - position.z
+        );
+
+        return newPosition;
     }
 }

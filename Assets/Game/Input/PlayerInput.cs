@@ -5,7 +5,7 @@ using Zenject;
 public class PlayerInput : ITickable
 {
     public event Action OnFired;
-    public event Action<float> Moved;
+    public event Action Moved;
     public event Action<float> OnRotate;
     
     public void Tick()
@@ -19,12 +19,12 @@ public class PlayerInput : ITickable
     {
         float move = Input.GetAxis("Vertical");
 
-        if (move < 0)
+        if (move <= 0)
         {
-            move = 0;
+            return;
         }
         
-        Moved?.Invoke(move);
+        Moved?.Invoke();
     }
 
     private void Rotation()

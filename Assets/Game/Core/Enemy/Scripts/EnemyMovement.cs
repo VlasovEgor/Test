@@ -1,10 +1,11 @@
 using UnityEngine;
 
 
-public class EnemyMovementBehaviour : MonoBehaviour
-{
-    [SerializeField] protected Movement _movement;
-
+public class EnemyMovement : MonoBehaviour
+{   
+    [SerializeField] private Rigidbody2D _rigidbody;
+    [SerializeField] protected float _speed = 5.0f;
+    
     private Vector2 _destination;
     private bool _isPointReached;
 
@@ -39,8 +40,18 @@ public class EnemyMovementBehaviour : MonoBehaviour
     {
         Vector2 vector = _destination - (Vector2)transform.position;
 
-        Vector2 moveStep = _movement.GetMoveStep(vector);
-        Vector2 nextPosition = _movement.Position + moveStep;
-       // _movement.MoveToPosition(nextPosition);
+        Vector2 moveStep = GetMoveStep(vector);
+        Vector2 nextPosition = (Vector2)transform.position + moveStep;
+        MoveToPosition(nextPosition);
+    }
+    
+    public void MoveToPosition(Vector2 nextPosition)
+    {
+       // _rigidbody.AddForce(transform.up * _speed);
+    }
+
+    public Vector2 GetMoveStep(Vector2 direction)
+    {
+        return direction.normalized * Time.fixedDeltaTime * _speed;
     }
 }

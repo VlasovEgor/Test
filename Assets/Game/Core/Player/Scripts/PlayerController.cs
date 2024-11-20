@@ -34,9 +34,9 @@ public sealed class PlayerController : IInitializable, IDisposable
     }
     
 
-    private void OnPlayerMoved(float inputValue)
+    private void OnPlayerMoved()
     {
-        _entity.Get<PlayerMovementBehaviour>().SetInputValue(inputValue);
+        _entity.Get<PlayerMovement>().Move();
     }
     
     private void OnPlayerRotated(float inputValue)
