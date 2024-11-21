@@ -3,55 +3,35 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {   
-    [SerializeField] private Rigidbody2D _rigidbody;
+    [SerializeField] private Transform _transform;
     [SerializeField] protected float _speed = 5.0f;
     
     private Vector2 _destination;
     private bool _isPointReached;
+    private Transform _targetTransform;
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (CheckAbilityMove())
+        if (_targetTransform != null)
         {
             Move();
         }
     }
 
-    public void SetDestination(Vector2 destination)
+    public void SetTarget(Transform target)
     {
-        _destination = destination;
-        _isPointReached = false;
-    }
-
-    private bool CheckAbilityMove()
-    {
-        Vector2 vector = _destination - (Vector2)transform.position;
-
-        if (vector.magnitude <= 0.25f)
-        {
-            _isPointReached = true;
-            return false;
-        }
-
-        return true;
-    }
-
-    private void Move()
-    {
-        Vector2 vector = _destination - (Vector2)transform.position;
-
-        Vector2 moveStep = GetMoveStep(vector);
-        Vector2 nextPosition = (Vector2)transform.position + moveStep;
-        MoveToPosition(nextPosition);
+        _targetTransform = target;
     }
     
-    public void MoveToPosition(Vector2 nextPosition)
+    private void Move()
     {
-       // _rigidbody.AddForce(transform.up * _speed);
+        var vector = _targetTransform.position - transform.position;
+        var direction = vector.normalized;
+        
+        var moveStep = direction * _speed * Time.deltaTime;
+        
+        _transform.Translate(moveStep);
     }
-
-    public Vector2 GetMoveStep(Vector2 direction)
-    {
-        return direction.normalized * Time.fixedDeltaTime * _speed;
-    }
+    
+   
 }

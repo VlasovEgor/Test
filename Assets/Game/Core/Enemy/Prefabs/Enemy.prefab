@@ -240,7 +240,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6655777926621526895}
   - component: {fileID: 5478067639282984273}
-  - component: {fileID: 3427656346695454281}
   m_Layer: 11
   m_Name: Movement
   m_TagString: Untagged
@@ -275,21 +274,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f088cece422f34d95f93c31653765b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movement: {fileID: 3427656346695454281}
---- !u!114 &3427656346695454281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5053351020295382065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c45754e120f52640b95ce79b6b3ab60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 659620479434099170}
-  _speed: 5
+  _transform: {fileID: 3470145497817149085}
+  _speed: 2
 --- !u!1 &6059328217366387925
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,4 +321,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entity: {fileID: 8308813036022649988}
-  _maxHealth: 3
+  _maxHealth: 1

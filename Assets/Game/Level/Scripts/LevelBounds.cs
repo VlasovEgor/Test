@@ -39,4 +39,40 @@ public sealed class LevelBounds: IInitializable
         float range = max - min;
         return min + (value - min + range) % range;
     }
+    
+    public Vector3 GetRandomPointOnBounds()
+    {
+        int side = Random.Range(0, 4);
+
+        switch (side)
+        {
+            case 0: // Верхняя граница
+                return new Vector3(
+                    Random.Range(_bounds.min.x, _bounds.max.x), 
+                    _bounds.max.y,                             
+                    0);                                        
+
+            case 1: // Нижняя граница
+                return new Vector3(
+                    Random.Range(_bounds.min.x, _bounds.max.x),
+                    _bounds.min.y,                              
+                    0);
+
+            case 2: // Левая граница
+                return new Vector3(
+                    _bounds.min.x,                             
+                    Random.Range(_bounds.min.y, _bounds.max.y),
+                    0);
+
+            case 3: // Правая граница
+                return new Vector3(
+                    _bounds.max.x,                              
+                    Random.Range(_bounds.min.y, _bounds.max.y),
+                    0);
+
+            default:
+                return Vector3.zero;
+        }
+    }
+
 }

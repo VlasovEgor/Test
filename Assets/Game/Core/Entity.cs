@@ -4,8 +4,6 @@ using UnityEngine;
 
 public sealed class Entity : MonoBehaviour
 {
-    public Transform Transform => transform;
-
     [SerializeField] private List<MonoBehaviour> _components;
 
     public T Get<T>() where T : class

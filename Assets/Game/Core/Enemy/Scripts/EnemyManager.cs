@@ -1,22 +1,32 @@
 using UnityEngine;
-using Random = UnityEngine.Random;
-
+using Zenject;
 
 public sealed class EnemyManager : MonoBehaviour
 {
-    [SerializeField] private Transform[] _spawnPositions;
-    [SerializeField] private Transform[] _attackPositions;
     [SerializeField] private Transform _container;
     [SerializeField] private int _enemyPoolInitSize;
     [SerializeField] private Entity _prefab;
+    [SerializeField] private Entity _player;
 
     private PoolObject<Entity> _enemyPool;
-
+    private LevelBounds _levelBounds;
+    
+    [Inject]
+    private void Construct(LevelBounds levelBounds)
+    {
+        _levelBounds = levelBounds;
+    }
+    
     private void Awake()
     {
         _enemyPool = new PoolObject<Entity>(_prefab, _container, _enemyPoolInitSize);
     }
 
+    private void Update()
+    {
+        CheckingExitEnemyBeyondLevel();
+    }
+    
     public void SpawnEnemy()
     {
         Entity enemy = _enemyPool.GetObject();
@@ -26,17 +36,10 @@ public sealed class EnemyManager : MonoBehaviour
     private void SetupEnemy(Entity enemy)
     {
         enemy.Get<Health>().OnHealthEmpty += EnemyDead;
-        Transform spawnPosition = RandomPoint(_spawnPositions);
-        enemy.Transform.position = spawnPosition.position;
-
-        Transform attackPosition = RandomPoint(_attackPositions);
-        enemy.Get<EnemyMovement>().SetDestination(attackPosition.position);
-    }
-
-    private Transform RandomPoint(Transform[] points)
-    {
-        int index = Random.Range(0, points.Length);
-        return points[index];
+        Vector3 spawnPosition = _levelBounds.GetRandomPointOnBounds();
+        enemy.transform.position = spawnPosition;
+        
+        enemy.Get<EnemyMovement>().SetTarget(_player.transform);
     }
     
     private void EnemyDead(Entity enemy)
@@ -44,5 +47,18 @@ public sealed class EnemyManager : MonoBehaviour
         _enemyPool.ReturnObject(enemy);
 
         enemy.Get<Health>().OnHealthEmpty -= EnemyDead;
+    }
+    
+    private void CheckingExitEnemyBeyondLevel()
+    {
+        var activeBullet = _enemyPool.GetActiveObjects();
+
+        for (int i = 0; i < activeBullet.Count; i++)
+        {
+            if (_levelBounds.InBounds(activeBullet[i].transform.position) == false)
+            {
+                activeBullet[i].transform.position = _levelBounds.NewPosition(activeBullet[i].transform.position);
+            }
+        }
     }
 }

@@ -3,6 +3,10 @@ using Zenject;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public Vector3 Position => _transform.position;
+    public float Rotation => _transform.eulerAngles.z;
+    public float InstantaneousSpeedView => _rigidbody.velocity.magnitude;
+    
     [SerializeField] private Transform _transform;
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] protected float _speed = 5.0f;
