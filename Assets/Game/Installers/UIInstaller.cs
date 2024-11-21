@@ -6,6 +6,7 @@ public class UIInstaller : MonoInstaller
     [SerializeField] private AngleRotationView _angleRotationView;
     [SerializeField] private CoordinatesView _coordinatesView;
     [SerializeField] private InstantaneousSpeedView _instantaneousSpeedView;
+    [SerializeField] private GameOverView _gameOverView;
     
     public override void InstallBindings()
     {
@@ -17,8 +18,11 @@ public class UIInstaller : MonoInstaller
         
         BindInstantaneousSpeedView();
         BindInstantaneousSpeedViewAdapter();
+        
+        BindGameOverView();
+        BindGameOverPresenter();
     }
-    
+
     private void BindAngleRotationView()
     {
         Container.Bind<AngleRotationView>().FromInstance(_angleRotationView).AsSingle();
@@ -47,5 +51,15 @@ public class UIInstaller : MonoInstaller
     private void BindInstantaneousSpeedViewAdapter()
     {
         Container.BindInterfacesAndSelfTo<InstantaneousSpeedViewAdapter>().AsSingle();
+    }
+    
+    private void BindGameOverView()
+    {
+        Container.Bind<GameOverView>().FromInstance(_gameOverView).AsSingle();
+    }
+    
+    private void BindGameOverPresenter()
+    {
+        Container.BindInterfacesAndSelfTo<GameOverPresenter>().AsSingle();
     }
 }

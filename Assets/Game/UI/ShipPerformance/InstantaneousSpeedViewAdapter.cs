@@ -19,6 +19,6 @@ public class InstantaneousSpeedViewAdapter: ITickable
 
     private void UpdateView()
     {
-        _instantaneousSpeedView.UpdateText(_playerMovement.InstantaneousSpeedView);
+        _instantaneousSpeedView.UpdateText(_playerMovement.InstantaneousSpeed);
     }
 }

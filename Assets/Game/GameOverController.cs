@@ -4,6 +4,7 @@ using Zenject;
 
 public class GameOverController : IInitializable, IDisposable
 {
+    public event Action GameOver;
     private Entity _player;
     
     [Inject]
@@ -29,7 +30,8 @@ public class GameOverController : IInitializable, IDisposable
     }
 
     private void StopGame()
-    {
+    {   
+        GameOver?.Invoke();
         Time.timeScale = 0;
     }
 }
