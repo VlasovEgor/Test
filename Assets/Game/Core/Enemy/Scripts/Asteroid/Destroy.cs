@@ -1,13 +1,15 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-
-public class Health : MonoBehaviour, IDamagable
+public class Destroy : MonoBehaviour, IDamagable
 {
     public event Action<Entity> OnHealthEmpty;
 
     [SerializeField] private Entity _entity;
     [SerializeField] private int _maxHealth;
+
+    [SerializeField] private List<Entity> _chips;
 
     private int _currentHealth;
 
@@ -32,8 +34,16 @@ public class Health : MonoBehaviour, IDamagable
     }
 
     private void Die()
-    {   
-        _entity.SetActive(false);
+    {
         OnHealthEmpty?.Invoke(_entity);
+        TurningOnChips();
+    }
+
+    private void TurningOnChips()
+    {
+        foreach (var chip in _chips)
+        {
+            chip.SetActive(true);
+        }
     }
 }

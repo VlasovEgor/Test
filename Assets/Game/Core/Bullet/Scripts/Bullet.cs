@@ -55,7 +55,7 @@ public sealed class Bullet : MonoBehaviour
 
     private void DealDamage(Entity entity)
     {
-        var health = entity.Get<Health>();
+        var health = entity.Get<IDamagable>();
         if (health != null)
         {
             health.TakeDamage(_damage);

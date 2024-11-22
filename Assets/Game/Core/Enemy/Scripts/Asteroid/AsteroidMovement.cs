@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class AsteroidMovement : MonoBehaviour
 {
@@ -6,13 +8,18 @@ public class AsteroidMovement : MonoBehaviour
     [SerializeField] protected float _speed = 5.0f;
 
     private Vector3 _direction;
-    
+
+    private void OnEnable()
+    {
+        ChoosingDirection();
+    }
+
     private void Update()
     {
         Move();
     }
 
-    public void ChoosingDirection()
+    private void ChoosingDirection()
     {
         _direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
     }

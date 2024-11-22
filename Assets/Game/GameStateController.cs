@@ -15,17 +15,16 @@ public class GameStateController : IInitializable, IDisposable
     
     public void Initialize()
     {
-        _player.Get<Health>().OnHealthEmpty += PlayerDead;
+        _player.Get<IDamagable>().OnHealthEmpty += PlayerDead;
     }
 
     public void Dispose()
     {
-        _player.Get<Health>().OnHealthEmpty -= PlayerDead;
+        _player.Get<IDamagable>().OnHealthEmpty -= PlayerDead;
     }
 
     private void PlayerDead(Entity player)
     {
-        player.SetActive(false);
         StopGame();
     }
 

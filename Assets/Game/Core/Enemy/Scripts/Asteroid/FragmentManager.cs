@@ -1,16 +1,18 @@
+
 using System;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
-public class AsteroidManager : MonoBehaviour
+public class FragmentManager : MonoBehaviour
 {
-   public event Action AsteroidDead;
+     public event Action AsteroidDead;
     
     [SerializeField] private Transform _container;
     [SerializeField] private int _enemyPoolInitSize;
     [SerializeField] private Entity _prefab;
 
-    [SerializeField] private FragmentManager fragmentManager;
+    [SerializeField] private int _maxAmountChips;
 
     private PoolObject<Entity> _enemyPool;
     private LevelBounds _levelBounds;
@@ -37,17 +39,17 @@ public class AsteroidManager : MonoBehaviour
         CheckingExitEnemyBeyondLevel();
     }
     
-    public void SpawnEnemy()
+    public void SpawnEnemy(Vector3 spawnPosition)
     {
-        Entity enemy = _enemyPool.GetObject();
-        SetupEnemy(enemy);
-    }
-
-    private void SetupEnemy(Entity enemy)
-    {
-        enemy.Get<IDamagable>().OnHealthEmpty += EnemyDead;
-        Vector3 spawnPosition = _levelBounds.GetRandomPointOnBounds();
-        enemy.transform.position = spawnPosition;
+        int randAmount = Random.Range(1, _maxAmountChips + 1);
+        
+        for (int i = 0; i < randAmount; i++)
+        {
+            Entity enemy = _enemyPool.GetObject();
+            
+            enemy.Get<IDamagable>().OnHealthEmpty += EnemyDead;
+            enemy.transform.position = spawnPosition;
+        }
     }
     
     private void EnemyDead(Entity enemy)
@@ -56,8 +58,6 @@ public class AsteroidManager : MonoBehaviour
 
         enemy.Get<IDamagable>().OnHealthEmpty -= EnemyDead;
         AsteroidDead?.Invoke();
-        
-        fragmentManager.SpawnEnemy(enemy.transform.position);
     }
     
     private void CheckingExitEnemyBeyondLevel()

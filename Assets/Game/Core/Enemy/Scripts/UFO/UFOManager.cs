@@ -44,7 +44,7 @@ public sealed class UFOManager : MonoBehaviour
 
     private void SetupEnemy(Entity enemy)
     {
-        enemy.Get<Health>().OnHealthEmpty += EnemyDead;
+        enemy.Get<IDamagable>().OnHealthEmpty += EnemyDead;
         Vector3 spawnPosition = _levelBounds.GetRandomPointOnBounds();
         enemy.transform.position = spawnPosition;
         
@@ -55,7 +55,7 @@ public sealed class UFOManager : MonoBehaviour
     {
         _enemyPool.ReturnObject(enemy);
 
-        enemy.Get<Health>().OnHealthEmpty -= EnemyDead;
+        enemy.Get<IDamagable>().OnHealthEmpty -= EnemyDead;
         UFODead?.Invoke();
     }
     
