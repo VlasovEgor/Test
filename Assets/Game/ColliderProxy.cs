@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class ColliderProxy : MonoBehaviour
 {
-    public event Action<Collider2D> OnTriggerEntered;
-
-    private void OnTriggerEnter2D(Collider2D other)
+    public event Action<Collision2D> OnCollisionEntered;
+    
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        OnTriggerEntered?.Invoke(other);
+        OnCollisionEntered?.Invoke(other);
     }
 }

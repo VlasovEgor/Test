@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 public class GameContextInstaller : MonoInstaller
-{ 
+{   
+    [FormerlySerializedAs("_enemyManager")] [SerializeField] private UFOManager ufoManager;
     [SerializeField] private BulletManager _bulletManager;
+    [SerializeField] private ScoreConfig _scoreConfig;
     
     public override void InstallBindings()
     {
@@ -11,7 +14,12 @@ public class GameContextInstaller : MonoInstaller
         BindPlayerInput();
         BindPlayerController();
         BindLevelBounds();
+        
+        BindEnemyManager();
         BindBulletManager();
+
+        BindScore();
+        BindScoreConfig();
     }
 
     private void BindGameOverController()
@@ -34,8 +42,23 @@ public class GameContextInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<LevelBounds>().AsSingle();
     }
     
+    private void BindEnemyManager()
+    {
+        Container.Bind<UFOManager>().FromInstance(ufoManager).AsSingle();
+    }
+    
     private void BindBulletManager()
     {
         Container.BindInterfacesAndSelfTo<BulletManager>().FromInstance(_bulletManager).AsSingle();
+    }
+    
+    private void BindScore()
+    {
+        Container.BindInterfacesAndSelfTo<Score>().AsSingle();
+    }
+    
+    private void BindScoreConfig()
+    {
+        Container.BindInterfacesAndSelfTo<ScoreConfig>().FromInstance(_scoreConfig).AsSingle();
     }
 }

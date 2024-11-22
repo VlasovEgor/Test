@@ -1,15 +1,11 @@
-using System;
-using System.Collections;
-using UnityEngine;
-using Random = UnityEngine.Random;
+﻿using UnityEngine;
 
-
-public class EnemySpawner : MonoBehaviour
+public class AsteroidSpawner: MonoBehaviour
 {
     [SerializeField] private float _minTimeBetweenSpawns = 1;
     [SerializeField] private float _maxTimeBetweenSpawns = 2;
 
-    [SerializeField] private EnemyManager _enemyManager;
+    [SerializeField] private AsteroidManager _asteroidManager;
 
     private bool _gameOnPause;
     private float _timeSinceLastSpawn;
@@ -42,7 +38,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (_timeSinceLastSpawn >= _nextSpawnTime)
         {
-            _enemyManager.SpawnEnemy();
+            _asteroidManager.SpawnEnemy();
             _timeSinceLastSpawn = 0;
             _nextSpawnTime = Random.Range(_minTimeBetweenSpawns, _maxTimeBetweenSpawns);
         }

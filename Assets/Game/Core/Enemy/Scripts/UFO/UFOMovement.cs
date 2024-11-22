@@ -1,7 +1,6 @@
 using UnityEngine;
 
-
-public class EnemyMovement : MonoBehaviour
+public class UFOMovement : MonoBehaviour
 {   
     [SerializeField] private Transform _transform;
     [SerializeField] protected float _speed = 5.0f;
@@ -37,6 +36,4 @@ public class EnemyMovement : MonoBehaviour
         
         _transform.Translate(moveStep);
     }
-    
-   
 }

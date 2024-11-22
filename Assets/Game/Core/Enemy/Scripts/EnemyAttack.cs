@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
@@ -8,15 +7,15 @@ public class EnemyAttack : MonoBehaviour
 
     private void Start()
     {
-        _colliderProxy.OnTriggerEntered += HandleTriggerEnter;
+        _colliderProxy.OnCollisionEntered += HandleCollisionEnter;
     }
 
     private void OnDestroy()
     {
-        _colliderProxy.OnTriggerEntered -= HandleTriggerEnter;
+        _colliderProxy.OnCollisionEntered -= HandleCollisionEnter;
     }
 
-    private void HandleTriggerEnter(Collider2D other)
+    private void HandleCollisionEnter(Collision2D other)
     {
         if (other.gameObject.TryGetComponent<Entity>(out var entity))
         {

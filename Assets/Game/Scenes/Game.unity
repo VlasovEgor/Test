@@ -352,6 +352,70 @@ Transform:
   m_Children: []
   m_Father: {fileID: 562298204}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &265002777
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 265002778}
+  - component: {fileID: 265002780}
+  - component: {fileID: 265002779}
+  m_Layer: 0
+  m_Name: Asteroids
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &265002778
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265002777}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1066367697}
+  m_Father: {fileID: 3951702117947426122}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &265002779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265002777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d33bc1215b7daf34da173fd176d19f6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _container: {fileID: 1066367697}
+  _enemyPoolInitSize: 10
+  _prefab: {fileID: 8308813036022649988, guid: 17985578be46a0846bb6be6298a6ce57, type: 3}
+--- !u!114 &265002780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265002777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb23060ac5d546769703e6b19d68b3f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minTimeBetweenSpawns: 3
+  _maxTimeBetweenSpawns: 5
+  _asteroidManager: {fileID: 265002779}
 --- !u!1 &284252572
 GameObject:
   m_ObjectHideFlags: 0
@@ -868,12 +932,12 @@ GameObject:
   - component: {fileID: 562298206}
   - component: {fileID: 562298205}
   m_Layer: 0
-  m_Name: Enemies
+  m_Name: UFO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &562298204
 Transform:
   m_ObjectHideFlags: 0
@@ -918,9 +982,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c475c424be919444a181b92361cd06a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minTimeBetweenSpawns: 1
-  _maxTimeBetweenSpawns: 2
-  _enemyManager: {fileID: 562298205}
+  _minTimeBetweenSpawns: 3
+  _maxTimeBetweenSpawns: 5
+  ufoManager: {fileID: 562298205}
 --- !u!1 &674229226
 GameObject:
   m_ObjectHideFlags: 0
@@ -1264,6 +1328,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1017404479}
+--- !u!1 &1066367696
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1066367697}
+  m_Layer: 0
+  m_Name: Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1066367697
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1066367696}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 265002778}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1133569342
 GameObject:
   m_ObjectHideFlags: 0
@@ -2321,6 +2416,7 @@ Transform:
   m_Children:
   - {fileID: 363245576}
   - {fileID: 562298204}
+  - {fileID: 265002778}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3951702117947426123
@@ -2335,7 +2431,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f15f840151fdb745a5f9451174b860a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ufoManager: {fileID: 562298205}
   _bulletManager: {fileID: 363245577}
+  _scoreConfig: {fileID: 11400000, guid: c60b46ab8ea59b640b5a1ac8a39b775b, type: 2}
 --- !u!4 &3971828247261515207
 Transform:
   m_ObjectHideFlags: 0

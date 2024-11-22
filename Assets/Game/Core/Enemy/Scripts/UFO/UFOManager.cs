@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 using Zenject;
 
-public sealed class EnemyManager : MonoBehaviour
+public sealed class UFOManager : MonoBehaviour
 {
+    public event Action UFODead;
+    
     [SerializeField] private Transform _container;
     [SerializeField] private int _enemyPoolInitSize;
     [SerializeField] private Entity _prefab;
@@ -45,7 +48,7 @@ public sealed class EnemyManager : MonoBehaviour
         Vector3 spawnPosition = _levelBounds.GetRandomPointOnBounds();
         enemy.transform.position = spawnPosition;
         
-        enemy.Get<EnemyMovement>().SetTarget(_player.transform);
+        enemy.Get<UFOMovement>().SetTarget(_player.transform);
     }
     
     private void EnemyDead(Entity enemy)
@@ -53,6 +56,7 @@ public sealed class EnemyManager : MonoBehaviour
         _enemyPool.ReturnObject(enemy);
 
         enemy.Get<Health>().OnHealthEmpty -= EnemyDead;
+        UFODead?.Invoke();
     }
     
     private void CheckingExitEnemyBeyondLevel()
@@ -82,7 +86,7 @@ public sealed class EnemyManager : MonoBehaviour
         
         foreach (var enemy in activeEnemies)
         {
-            enemy.Get<EnemyMovement>().Stop();
+            enemy.Get<UFOMovement>().Stop();
         }
     }
 }
