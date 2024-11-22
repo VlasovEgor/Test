@@ -1,10 +1,10 @@
 using System;
-using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
-public class GameOverController : IInitializable, IDisposable
+public class GameStateController : IInitializable, IDisposable
 {
-    public event Action GameOver;
+    public event Action GameStopped;
     private Entity _player;
     
     [Inject]
@@ -31,7 +31,13 @@ public class GameOverController : IInitializable, IDisposable
 
     private void StopGame()
     {   
-        GameOver?.Invoke();
-        Time.timeScale = 0;
+        GameStopped?.Invoke();
+        GameStateManager.Instance.SetState(GameState.PAUSE);
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        GameStateManager.Instance.SetState(GameState.START);
     }
 }

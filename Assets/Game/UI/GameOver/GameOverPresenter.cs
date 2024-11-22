@@ -3,27 +3,27 @@ using Zenject;
 
 public class GameOverPresenter: IInitializable, IDisposable
 {
-    private GameOverController _gameOverController;
+    private GameStateController _gameStateController;
     private GameOverView _gameOverView;
     
     [Inject]
-    private void Construct(GameOverController gameOverController, GameOverView gameOverView)
+    private void Construct(GameStateController gameStateController, GameOverView gameOverView)
     {
-        _gameOverController = gameOverController;
+        _gameStateController = gameStateController;
         _gameOverView = gameOverView;
     }
     
     public void Initialize()
     {
-        _gameOverController.GameOver += OpenGameOverView;
+        _gameStateController.GameStopped += OpenGameStateView;
     }
 
     public void Dispose()
     {
-        _gameOverController.GameOver -= OpenGameOverView;
+        _gameStateController.GameStopped -= OpenGameStateView;
     }
 
-    private void OpenGameOverView()
+    private void OpenGameStateView()
     {
         _gameOverView.Show();
     }
@@ -31,5 +31,6 @@ public class GameOverPresenter: IInitializable, IDisposable
     public void OnNewGameButtonClicked()
     {   
         _gameOverView.Hide();
+        _gameStateController.RestartGame();
     }
 }

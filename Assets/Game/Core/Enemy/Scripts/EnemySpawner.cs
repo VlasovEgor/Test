@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 
 public class EnemySpawner : MonoBehaviour
@@ -9,17 +11,40 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField] private EnemyManager _enemyManager;
 
+    private bool _gameOnPause;
+    private float _timeSinceLastSpawn;
+    private float _nextSpawnTime;
+
     private void Start()
     {
-        StartCoroutine(SpawnEnemiesCoroutine());
+        GameStateManager.Instance.GameStateChanged += OnGameStateChanged;
+        _nextSpawnTime = Random.Range(_minTimeBetweenSpawns, _maxTimeBetweenSpawns);
     }
 
-    private IEnumerator SpawnEnemiesCoroutine()
+    private void OnDestroy()
     {
-        while (true)
+        GameStateManager.Instance.GameStateChanged -= OnGameStateChanged;
+    }
+
+    private void OnGameStateChanged(GameState state)
+    {
+        _gameOnPause = state == GameState.PAUSE;
+    }
+
+    private void Update()
+    {
+        if (_gameOnPause)
         {
-            yield return new WaitForSeconds(Random.Range(_minTimeBetweenSpawns, _maxTimeBetweenSpawns));
+            return;
+        }
+
+        _timeSinceLastSpawn += Time.deltaTime;
+
+        if (_timeSinceLastSpawn >= _nextSpawnTime)
+        {
             _enemyManager.SpawnEnemy();
+            _timeSinceLastSpawn = 0;
+            _nextSpawnTime = Random.Range(_minTimeBetweenSpawns, _maxTimeBetweenSpawns);
         }
     }
 }

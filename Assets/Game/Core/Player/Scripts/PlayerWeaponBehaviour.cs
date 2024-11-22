@@ -4,9 +4,8 @@ using UnityEngine;
 public class PlayerWeaponBehaviour : MonoBehaviour
 {
     [SerializeField] private Transform _firePoint;
-
     [SerializeField] private Weapon _weapon;
-
+    
     public void SetBulletManager(BulletManager bulletManager)
     {
         _weapon.SetBulletManager(bulletManager);

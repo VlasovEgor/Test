@@ -62,4 +62,10 @@ public sealed class Bullet : MonoBehaviour
             BulletOff?.Invoke(this);
         }
     }
+
+    public void Stop()
+    {
+        _rigidbody2D.velocity = Vector2.zero;
+        _timer.Stop();
+    }
 }

@@ -22,6 +22,11 @@ public class EnemyMovement : MonoBehaviour
     {
         _targetTransform = target;
     }
+
+    public void Stop()
+    {
+        _speed = 0;
+    }
     
     private void Move()
     {

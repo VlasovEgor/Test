@@ -20,6 +20,20 @@ public class BulletManager : MonoBehaviour
     private void Start()
     {
         _bulletPool = new PoolObject<Bullet>(_prefab, transform, _initialSizePool);
+        GameStateManager.Instance.GameStateChanged += OnGameStateChanged;
+    }
+
+    private void OnDestroy()
+    {
+        GameStateManager.Instance.GameStateChanged -= OnGameStateChanged;
+    }
+
+    private void OnGameStateChanged(GameState state)
+    {
+        if (state == GameState.PAUSE)
+        {
+            StopBullets();
+        }
     }
 
     private void Update()
@@ -54,5 +68,15 @@ public class BulletManager : MonoBehaviour
     {
         bullet.BulletOff -= RemoveBullet;
         _bulletPool.ReturnObject(bullet);
+    }
+
+    private void StopBullets()
+    {
+        var activeBullet = _bulletPool.GetActiveObjects();
+
+        foreach (var bullet in activeBullet)
+        {
+            bullet.Stop();
+        }
     }
 }

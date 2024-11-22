@@ -2,14 +2,36 @@ using System;
 using UnityEngine;
 using Zenject;
 
-public class PlayerInput : ITickable
+public class PlayerInput : IInitializable, IDisposable, ITickable
 {
     public event Action OnFired;
     public event Action Moved;
     public event Action<float> OnRotate;
     
+    private bool _gameOnPause;
+
+    public void Initialize()
+    {
+        GameStateManager.Instance.GameStateChanged += OnGameStateChanged;
+    }
+
+    public void Dispose()
+    {
+        GameStateManager.Instance.GameStateChanged -= OnGameStateChanged;
+    }
+
+    private void OnGameStateChanged(GameState state)
+    {
+        _gameOnPause = state == GameState.PAUSE;
+    }
+    
     public void Tick()
     {
+        if (_gameOnPause)
+        {
+            return;
+        }
+        
         Movement();
         Rotation();
         Fire();

@@ -18,10 +18,16 @@ public sealed class EnemyManager : MonoBehaviour
     }
     
     private void Awake()
-    {
+    {   
+        GameStateManager.Instance.GameStateChanged += OnGameStateChanged;
         _enemyPool = new PoolObject<Entity>(_prefab, _container, _enemyPoolInitSize);
     }
 
+    private void OnDestroy()
+    {   
+        GameStateManager.Instance.GameStateChanged -= OnGameStateChanged;
+    }
+    
     private void Update()
     {
         CheckingExitEnemyBeyondLevel();
@@ -51,14 +57,32 @@ public sealed class EnemyManager : MonoBehaviour
     
     private void CheckingExitEnemyBeyondLevel()
     {
-        var activeBullet = _enemyPool.GetActiveObjects();
+        var activeEnemies = _enemyPool.GetActiveObjects();
 
-        for (int i = 0; i < activeBullet.Count; i++)
+        for (int i = 0; i < activeEnemies.Count; i++)
         {
-            if (_levelBounds.InBounds(activeBullet[i].transform.position) == false)
+            if (_levelBounds.InBounds(activeEnemies[i].transform.position) == false)
             {
-                activeBullet[i].transform.position = _levelBounds.NewPosition(activeBullet[i].transform.position);
+                activeEnemies[i].transform.position = _levelBounds.NewPosition(activeEnemies[i].transform.position);
             }
+        }
+    }
+    
+    private void OnGameStateChanged(GameState state)
+    {
+        if (state == GameState.PAUSE)
+        {
+            StopEnemies();
+        }
+    }
+
+    private void StopEnemies()
+    {
+        var activeEnemies = _enemyPool.GetActiveObjects();
+        
+        foreach (var enemy in activeEnemies)
+        {
+            enemy.Get<EnemyMovement>().Stop();
         }
     }
 }

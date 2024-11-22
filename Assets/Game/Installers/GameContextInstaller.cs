@@ -16,7 +16,7 @@ public class GameContextInstaller : MonoInstaller
 
     private void BindGameOverController()
     {
-        Container.BindInterfacesAndSelfTo<GameOverController>().AsSingle();
+        Container.BindInterfacesAndSelfTo<GameStateController>().AsSingle();
     }
     
     private void BindPlayerInput()

@@ -5,37 +5,25 @@ using System.Collections;
 public sealed class Timer : MonoBehaviour
 {
     public event Action OnEnded;
-    public event Action OnStarted;
-    public event Action OnTimeChanged;
-
-    public bool IsPlaying { get; private set; }
-
-    public float Duration
-    {
-        get { return _duration; }
-        set { _duration = value; }
-    }
-
-    public float RemainingTime => _remainingTime;
-
+    
     [SerializeField] private float _duration;
+    
     private float _currentTime;
-    private float _remainingTime;
+    private bool _isPlaying;
 
     public void Play()
     {
-        if (!IsPlaying)
+        if (!_isPlaying)
         {
-            IsPlaying = true;
-            OnStarted?.Invoke();
+            _isPlaying = true;
         }
     }
 
     public void Stop()
     {
-        if (IsPlaying)
+        if (_isPlaying)
         {
-            IsPlaying = false;
+            _isPlaying = false;
         }
     }
 
@@ -43,28 +31,18 @@ public sealed class Timer : MonoBehaviour
     {
         _currentTime = 0;
     }
-
-    public float Progress
-    {
-        get { return _currentTime / _duration; }
-    }
-
+    
     private void Update()
     {
-        if (IsPlaying)
-        {
-            _currentTime += Time.deltaTime;
-            _remainingTime = _duration - _currentTime;
-            OnTimeChanged?.Invoke();
+        if (!_isPlaying) return;
+        
+        _currentTime += Time.deltaTime;
 
-            if (_currentTime >= _duration)
-            {
-                _currentTime = _duration;
-                _remainingTime = 0;
-                OnTimeChanged?.Invoke();
-                IsPlaying = false;
-                OnEnded?.Invoke();
-            }
+        if (_currentTime >= _duration)
+        {
+            _currentTime = _duration;
+            _isPlaying = false;
+            OnEnded?.Invoke();
         }
     }
 }
