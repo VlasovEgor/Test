@@ -1,23 +1,22 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 public class PlayerWeaponBehaviour : MonoBehaviour
 {
-    [SerializeField] private Transform _firePoint;
-    [SerializeField] private Weapon _weapon;
+    [SerializeField] private BulletWeapon _bulletWeapon;
+    [SerializeField] private LazerWeapon _lazerWeapon;
     
     public void SetBulletManager(BulletManager bulletManager)
     {
-        _weapon.SetBulletManager(bulletManager);
+        _bulletWeapon.SetBulletManager(bulletManager);
     }
 
     public void Attack()
     {
-        _weapon.Attack(GetDirectionShot());
+       // _bulletWeapon.Attack(GetDirectionShot());
+       _lazerWeapon.Attack();
     }
 
-    private Vector3 GetDirectionShot()
-    {
-        return _firePoint.rotation * Vector3.up;
-    }
+    
 }

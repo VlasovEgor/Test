@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class Weapon : MonoBehaviour
+public class BulletWeapon : MonoBehaviour
 {
     [SerializeField] private Transform _firePoint;
 
@@ -12,9 +12,14 @@ public class Weapon : MonoBehaviour
         _bulletManager = bulletManager;
     }
 
-    public void Attack(Vector3 direction)
+    public void Attack()
     {
         Bullet bullet = _bulletManager.SpawnBullet(_firePoint.position);
-        bullet.SetVelocity(direction);
+        bullet.SetVelocity(GetDirectionShot());
+    }
+    
+    private Vector3 GetDirectionShot()
+    {
+        return _firePoint.rotation * Vector3.up;
     }
 }

@@ -41,7 +41,7 @@ public sealed class LevelBackground : MonoBehaviour
     private void MoveDown()
     {
         var offsetY = _movingSpeedY * Time.deltaTime;
-        transform.position -= new Vector3(transform.position.x, offsetY, transform.position.z);
+        transform.position -= new Vector3(transform.position.x, offsetY);
 
         _currentDistanceTraveled += offsetY;
     }
