@@ -4,22 +4,18 @@ using Zenject;
 
 public class BulletManager : MonoBehaviour
 {
-    [SerializeField] private Bullet _prefab;
-    [SerializeField] private int _initialSizePool;
-
     private LevelBounds _levelBounds;
-
-    private PoolObject<Bullet> _bulletPool;
+    private Bullet.BulletPool _bulletPool;
     
     [Inject]
-    private void Construct(LevelBounds levelBounds)
+    private void Construct(LevelBounds levelBounds, Bullet.BulletPool bulletPool)
     {
         _levelBounds = levelBounds;
+        _bulletPool = bulletPool;
     }
     
     private void Start()
     {
-        _bulletPool = new PoolObject<Bullet>(_prefab, transform, _initialSizePool);
         GameStateManager.Instance.GameStateChanged += OnGameStateChanged;
     }
 
@@ -43,38 +39,30 @@ public class BulletManager : MonoBehaviour
 
     private void CheckingExitBulletsBeyondLevel()
     {
-        var activeBullet = _bulletPool.GetActiveObjects();
-
-        for (int i = 0; i < activeBullet.Count; i++)
+        foreach (var bullet in _bulletPool.ActiveBullets)
         {
-            if (_levelBounds.InBounds(activeBullet[i].transform.position) == false)
+            if (!_levelBounds.InBounds(bullet.transform.position))
             {
-                activeBullet[i].transform.position = _levelBounds.NewPosition(activeBullet[i].transform.position);
+                bullet.transform.position = _levelBounds.NewPosition(bullet.transform.position);
             }
         }
     }
 
-    public Bullet SpawnBullet(Vector2 position)
+    public void SpawnBullet(Vector3 position, Vector2 velocity)
     {
-        Bullet bullet = _bulletPool.GetObject();
-        bullet.Activate();
-        bullet.SetPosition(position);
+        Bullet bullet = _bulletPool.Spawn(position, velocity);
         bullet.BulletOff += RemoveBullet;
-
-        return bullet;
     }
 
     private void RemoveBullet(Bullet bullet)
     {
         bullet.BulletOff -= RemoveBullet;
-        _bulletPool.ReturnObject(bullet);
+        _bulletPool.Despawn(bullet);
     }
 
     private void StopBullets()
     {
-        var activeBullet = _bulletPool.GetActiveObjects();
-
-        foreach (var bullet in activeBullet)
+        foreach (var bullet in _bulletPool.ActiveBullets)
         {
             bullet.Stop();
         }

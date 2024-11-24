@@ -46,6 +46,6 @@ public sealed class PlayerController : IInitializable, IDisposable
 
     private void OnPlayerFired()
     {
-        _entity.Get<PlayerWeapon>().LaserAttack();
+        _entity.Get<PlayerWeapon>().BulletAttack();
     }
 }
