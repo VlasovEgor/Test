@@ -3,28 +3,45 @@ using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
 public class LazerWeapon : MonoBehaviour
-{
+{  
+   public int CurrentLaserShots => _currentLaserShots;
+   public float LaserRechargeTime => GetRemainingLaserRechargeTime();
+   
    [SerializeField] private Transform _firePoint;
+   [Space]
    [SerializeField] private float _laserRange = 5f;
    [SerializeField] private float _extendDuration = 1f;
+   [SerializeField] private int _maxLaserShots = 3;
+   [SerializeField] private float _laserRechargeTime = 2.0f;
    
    private LineRenderer _line;
    private bool _canFire = true;
+   private int _currentLaserShots;
+   private float _lastLaserShotTime;
 
    private void Start()
    {
       _line = GetComponent<LineRenderer>();
       _line.enabled = false;
+      
+      _currentLaserShots = _maxLaserShots;
+      _lastLaserShotTime = Time.time;
    }
 
-   public bool TryAttack()
+   private void Update()
+   {
+      RechargeLaserShots();
+   }
+
+   public void TryAttack()
    {  
-      if(!_canFire) return false;
+      if (!_canFire || _currentLaserShots <= 0) return;
       
       StartCoroutine(ExtendLaser());
       StartCoroutine(FireRateTimer());
-
-      return true;
+      
+      _currentLaserShots--;
+      _lastLaserShotTime = Time.time;
    }
    
    private IEnumerator ExtendLaser()
@@ -56,5 +73,27 @@ public class LazerWeapon : MonoBehaviour
       _canFire = false;
       yield return new WaitForSeconds(_extendDuration);
       _canFire = true;
+   }
+   
+   private void RechargeLaserShots()
+   {
+      if (_currentLaserShots >= _maxLaserShots) return;
+
+      float remainingTime = GetRemainingLaserRechargeTime();
+      if (remainingTime <= 0)
+      {
+         _currentLaserShots++;
+         _lastLaserShotTime += _laserRechargeTime;
+      }
+   }
+
+   private float GetRemainingLaserRechargeTime()
+   {
+      if (_currentLaserShots >= _maxLaserShots) return 0f;
+
+      float timeSinceLastShot = Time.time - _lastLaserShotTime;
+      float remainingTime = _laserRechargeTime - timeSinceLastShot;
+
+      return remainingTime > 0 ? remainingTime : 0f;
    }
 }

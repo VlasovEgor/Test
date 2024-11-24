@@ -3,13 +3,13 @@
 public class LaserRechargeViewAdapter: ITickable
 {
     private LaserRechargeView _laserRechargeView;
-    private PlayerWeaponBehaviour _weaponBehaviour;
+    private PlayerWeapon _weapon;
     
     [Inject]
     private void Construct(LaserRechargeView laserRechargeView, Entity player)
     {
         _laserRechargeView = laserRechargeView;
-        _weaponBehaviour = player.Get<PlayerWeaponBehaviour>();
+        _weapon = player.Get<PlayerWeapon>();
     }
 
     public void Tick()
@@ -19,6 +19,6 @@ public class LaserRechargeViewAdapter: ITickable
     
     private void UpdateView()
     {
-        _laserRechargeView.UpdateText(_weaponBehaviour.LaserRechargeTime);
+        _laserRechargeView.UpdateText(_weapon.LaserRechargeTime);
     }
 }

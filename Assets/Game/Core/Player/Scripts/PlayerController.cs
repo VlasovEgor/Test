@@ -22,7 +22,7 @@ public sealed class PlayerController : IInitializable, IDisposable
         
         _input.OnFired += OnPlayerFired;
         
-        _entity.Get<PlayerWeaponBehaviour>().SetBulletManager(_bulletManager);
+        _entity.Get<PlayerWeapon>().SetBulletManager(_bulletManager);
     }
 
     public void Dispose()
@@ -46,6 +46,6 @@ public sealed class PlayerController : IInitializable, IDisposable
 
     private void OnPlayerFired()
     {
-        _entity.Get<PlayerWeaponBehaviour>().LaserAttack();
+        _entity.Get<PlayerWeapon>().LaserAttack();
     }
 }
