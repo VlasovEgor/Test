@@ -18,6 +18,21 @@ public sealed class Entity : MonoBehaviour
 
         return null;
     }
+    
+    public bool TryGet<T>(out T component) where T : class
+    {
+        component = null;
+        foreach (var comp in _components)
+        {
+            if (comp is T)
+            {
+                component = comp as T;
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public void SetActive(bool IsActive)
     {

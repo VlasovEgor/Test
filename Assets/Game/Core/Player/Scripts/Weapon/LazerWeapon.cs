@@ -8,11 +8,14 @@ public class LazerWeapon : MonoBehaviour
    public float LaserRechargeTime => GetRemainingLaserRechargeTime();
    
    [SerializeField] private Transform _firePoint;
+   [SerializeField] private LayerMask _enemyLayerMask;
    [Space]
+   [SerializeField] private int _damage = 1;
    [SerializeField] private float _laserRange = 5f;
    [SerializeField] private float _extendDuration = 1f;
    [SerializeField] private int _maxLaserShots = 3;
    [SerializeField] private float _laserRechargeTime = 2.0f;
+   
    
    private LineRenderer _line;
    private bool _canFire = true;
@@ -55,10 +58,21 @@ public class LazerWeapon : MonoBehaviour
          _line.SetPosition(0, _firePoint.position);
          _line.SetPosition(1, _firePoint.position + _firePoint.up * currentRange);
 
-         RaycastHit2D[] hits = Physics2D.RaycastAll(_firePoint.position, _firePoint.up, currentRange);
+         RaycastHit2D[] hits = Physics2D.RaycastAll(
+            _firePoint.position, 
+            _firePoint.up, 
+            currentRange,
+            _enemyLayerMask);
+         
          foreach (RaycastHit2D hit in hits)
          {
-           Debug.Log("ABOBA");
+            if (hit.collider.TryGetComponent<Entity>(out var entity))
+            {
+               if (entity.TryGet<IDamagable>(out var damagable))
+               {
+                  damagable.TakeDamage(_damage);
+               }
+            }
          }
 
          elapsedTime += Time.deltaTime;

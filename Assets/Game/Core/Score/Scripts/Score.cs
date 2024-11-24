@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using Zenject;
 
 public class Score : IInitializable, IDisposable
@@ -26,7 +27,7 @@ public class Score : IInitializable, IDisposable
     }
 
     private void AddUfoScore()
-    {
+    {   
         _score += _scoreConfig.UFOScore;
     }
 
