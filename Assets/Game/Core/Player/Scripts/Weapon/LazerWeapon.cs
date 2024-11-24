@@ -6,9 +6,10 @@ public class LazerWeapon : MonoBehaviour
 {
    [SerializeField] private Transform _firePoint;
    [SerializeField] private float _laserRange = 5f;
-   [SerializeField] private float extendDuration = 1f;
+   [SerializeField] private float _extendDuration = 1f;
    
    private LineRenderer _line;
+   private bool _canFire = true;
 
    private void Start()
    {
@@ -16,19 +17,24 @@ public class LazerWeapon : MonoBehaviour
       _line.enabled = false;
    }
 
-   public void Attack()
+   public bool TryAttack()
    {  
+      if(!_canFire) return false;
+      
       StartCoroutine(ExtendLaser());
+      StartCoroutine(FireRateTimer());
+
+      return true;
    }
    
-   IEnumerator ExtendLaser()
+   private IEnumerator ExtendLaser()
    {
       _line.enabled = true;
       float elapsedTime = 0f;
 
-      while (elapsedTime < extendDuration)
+      while (elapsedTime < _extendDuration)
       {
-         float currentRange = Mathf.Lerp(0, _laserRange, elapsedTime / extendDuration);
+         float currentRange = Mathf.Lerp(0, _laserRange, elapsedTime / _extendDuration);
          _line.SetPosition(0, _firePoint.position);
          _line.SetPosition(1, _firePoint.position + _firePoint.up * currentRange);
 
@@ -43,5 +49,12 @@ public class LazerWeapon : MonoBehaviour
       }
       
       _line.enabled = false;
+   }
+   
+   private IEnumerator FireRateTimer()
+   {
+      _canFire = false;
+      yield return new WaitForSeconds(_extendDuration);
+      _canFire = true;
    }
 }

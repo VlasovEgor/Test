@@ -6,6 +6,8 @@ public class UIInstaller : MonoInstaller
     [SerializeField] private AngleRotationView _angleRotationView;
     [SerializeField] private CoordinatesView _coordinatesView;
     [SerializeField] private InstantaneousSpeedView _instantaneousSpeedView;
+    [SerializeField] private LaserRechargeView _laserRechargeView;
+    [SerializeField] private LaserShotView _laserShotView;
     [SerializeField] private GameOverView _gameOverView;
     
     public override void InstallBindings()
@@ -18,6 +20,12 @@ public class UIInstaller : MonoInstaller
         
         BindInstantaneousSpeedView();
         BindInstantaneousSpeedViewAdapter();
+        
+        BindLaserRechargeView();
+        BindLaserRechargeViewAdapter();
+        
+        BindLaserShotView();
+        BindLaserShotViewAdapter();
         
         BindGameOverView();
         BindGameOverPresenter();
@@ -46,6 +54,26 @@ public class UIInstaller : MonoInstaller
     private void BindInstantaneousSpeedView()
     {
         Container.Bind<InstantaneousSpeedView>().FromInstance(_instantaneousSpeedView).AsSingle();
+    }
+    
+    private void BindLaserRechargeViewAdapter()
+    {
+        Container.BindInterfacesAndSelfTo<LaserRechargeViewAdapter>().AsSingle();
+    }
+    
+    private void BindLaserRechargeView()
+    {
+        Container.Bind<LaserRechargeView>().FromInstance(_laserRechargeView).AsSingle();
+    }
+    
+    private void BindLaserShotViewAdapter()
+    {
+        Container.BindInterfacesAndSelfTo<LaserShotViewAdapter>().AsSingle();
+    }
+    
+    private void BindLaserShotView()
+    {
+        Container.Bind<LaserShotView>().FromInstance(_laserShotView).AsSingle();
     }
     
     private void BindInstantaneousSpeedViewAdapter()
