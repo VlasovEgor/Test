@@ -4,9 +4,13 @@ using Zenject;
 
 public class PlayerInput : IInitializable, IDisposable, ITickable
 {
-    public event Action OnFired;
+    public event Action BulletFired;
+    
+    public event Action LaserFired;
+    
     public event Action Moved;
-    public event Action<float> OnRotate;
+    
+    public event Action<float> Rotated;
     
     private bool _gameOnPause;
 
@@ -53,14 +57,19 @@ public class PlayerInput : IInitializable, IDisposable, ITickable
     {
         float rotate = Input.GetAxis("Horizontal");
         
-        OnRotate?.Invoke(rotate);
+        Rotated?.Invoke(rotate);
     }
 
     private void Fire()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            OnFired?.Invoke();
+            BulletFired?.Invoke();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            LaserFired?.Invoke();
         }
     }
 }

@@ -18,9 +18,10 @@ public sealed class PlayerController : IInitializable, IDisposable
     public void Initialize()
     {
         _input.Moved += OnPlayerMoved;
-        _input.OnRotate += OnPlayerRotated;
+        _input.Rotated += OnPlayerRotated;
         
-        _input.OnFired += OnPlayerFired;
+        _input.BulletFired += BulletPlayerFired;
+        _input.LaserFired += OnLaserFired;
         
         _entity.Get<PlayerWeapon>().SetBulletManager(_bulletManager);
     }
@@ -28,9 +29,10 @@ public sealed class PlayerController : IInitializable, IDisposable
     public void Dispose()
     {
         _input.Moved -= OnPlayerMoved;
-        _input.OnRotate -= OnPlayerRotated;
+        _input.Rotated -= OnPlayerRotated;
         
-        _input.OnFired -= OnPlayerFired;
+        _input.BulletFired -= BulletPlayerFired;
+        _input.LaserFired -= OnLaserFired;
     }
     
 
@@ -44,7 +46,12 @@ public sealed class PlayerController : IInitializable, IDisposable
         _entity.Get<Rotation>().SetInputValue(inputValue);
     }
 
-    private void OnPlayerFired()
+    private void BulletPlayerFired()
+    {
+        _entity.Get<PlayerWeapon>().BulletAttack();
+    }
+    
+    private void OnLaserFired()
     {
         _entity.Get<PlayerWeapon>().LaserAttack();
     }
