@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 public sealed class Bullet : MonoBehaviour
 {
@@ -30,12 +28,17 @@ public sealed class Bullet : MonoBehaviour
         _timer.ResetTime();
         _timer.Play();
     }
-    
-    public void SetPositionAndVelocity(Vector3 position, Vector2 velocity)
+
+    public void SetPosition(Vector3 position)
     {
         transform.position = position;
+    }
+
+    public void SetVelocity(Vector2 velocity)
+    {
         _rigidbody2D.velocity = velocity.normalized * _speed;
     }
+
     private void Disable()
     {
         gameObject.SetActive(false);
@@ -64,28 +67,5 @@ public sealed class Bullet : MonoBehaviour
     {
         _rigidbody2D.velocity = Vector2.zero;
         _timer.Stop();
-    }
-    
-    public class BulletPool : MonoMemoryPool<Vector3, Vector2, Bullet>
-    {
-        private readonly List<Bullet> _activeBullets = new();
-
-        public IReadOnlyList<Bullet> ActiveBullets => _activeBullets;
-
-        protected override void Reinitialize(Vector3 position, Vector2 velocity, Bullet bullet)
-        {   
-            bullet.Activate();
-            bullet.SetPositionAndVelocity(position, velocity);
-
-            _activeBullets.Add(bullet);
-        }
-        
-        protected override void OnDespawned(Bullet bullet)
-        {
-            bullet.Stop();
-            bullet.gameObject.SetActive(false);
-
-            _activeBullets.Remove(bullet);
-        }
     }
 }
