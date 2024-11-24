@@ -23,8 +23,11 @@ public class BulletWeapon : MonoBehaviour
 
     private void Attack()
     {
-        Bullet bullet = _bulletManager.SpawnBullet(_firePoint.position);
+        Bullet bullet = _bulletManager.SpawnBullet();
+        
+        bullet.SetPosition(_firePoint.position);
         bullet.SetVelocity(_firePoint.rotation * Vector3.up);
+        
         StartCoroutine(FireRateTimer());
     }
 

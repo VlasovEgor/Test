@@ -54,11 +54,10 @@ public class BulletManager : MonoBehaviour
         }
     }
 
-    public Bullet SpawnBullet(Vector2 position)
+    public Bullet SpawnBullet()
     {
         Bullet bullet = _bulletPool.GetObject();
         bullet.Activate();
-        bullet.SetPosition(position);
         bullet.BulletOff += RemoveBullet;
 
         return bullet;

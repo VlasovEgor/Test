@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -8,9 +9,12 @@ public interface IEnemySpawner
 
 public abstract class BaseEnemyManager : MonoBehaviour
 {
-    [SerializeField] protected Transform _container;
-    [SerializeField] protected int _enemyPoolInitSize;
-    [SerializeField] protected Entity _prefab;
+    public event Action<EnemyType> EnemyDied;
+    
+    [SerializeField] private Transform _container;
+    [SerializeField] private int _enemyPoolInitSize;
+    [SerializeField] private Entity _prefab;
+    [SerializeField] private EnemyType _type;
     
     protected PoolObject<Entity> _enemyPool;
     protected LevelBounds _levelBounds;
@@ -68,9 +72,16 @@ public abstract class BaseEnemyManager : MonoBehaviour
     }
     
     protected virtual void OnEnemyDead(Entity enemy)
-    {
+    {   
+        EnemyDied?.Invoke(_type);
         _enemyPool.ReturnObject(enemy);
         enemy.Get<IDamagable>().OnHealthEmpty -= OnEnemyDead;
     }
+}
 
+public enum EnemyType
+{
+    UFO,
+    ASTEROID,
+    FRAGMENT
 }

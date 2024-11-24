@@ -3,7 +3,7 @@ using UnityEngine;
 public class UFOManager :  BaseEnemyManager, IEnemySpawner
 {
     [SerializeField] private Entity _player;
-
+    
     public void SpawnEnemy()
     {
         Entity enemy = _enemyPool.GetObject();

@@ -3,8 +3,11 @@ using Zenject;
 
 public class GameContextInstaller : MonoInstaller
 {   
-    [SerializeField] private UFOManager ufoManager;
+    [SerializeField] private UFOManager _ufoManager;
+    [SerializeField] private AsteroidManager _asteroidManager;
+    [SerializeField] private FragmentManager _fragmentManager;
     [SerializeField] private BulletManager _bulletManager;
+    
     [SerializeField] private ScoreConfig _scoreConfig;
     
     public override void InstallBindings()
@@ -14,7 +17,9 @@ public class GameContextInstaller : MonoInstaller
         BindPlayerController();
         BindLevelBounds();
         
-        BindEnemyManager();
+        BindUfoManager();
+        BindAsteroidManager();
+        BindFragmentManager();
         BindBulletManager();
 
         BindScore();
@@ -41,9 +46,19 @@ public class GameContextInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<LevelBounds>().AsSingle();
     }
     
-    private void BindEnemyManager()
+    private void BindUfoManager()
     {
-        Container.Bind<UFOManager>().FromInstance(ufoManager).AsSingle();
+        Container.Bind<UFOManager>().FromInstance(_ufoManager).AsSingle();
+    }
+    
+    private void BindAsteroidManager()
+    {
+        Container.Bind<AsteroidManager>().FromInstance(_asteroidManager).AsSingle();
+    }
+    
+    private void BindFragmentManager()
+    {
+        Container.Bind<FragmentManager>().FromInstance(_fragmentManager).AsSingle();
     }
     
     private void BindBulletManager()

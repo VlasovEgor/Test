@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 299145fb4e7ea3248819007d7e66ac9c, type: 3}
   m_Name: ScoreConfig
   m_EditorClassIdentifier: 
+  _enemiesScore:
+  - Type: 0
+    Score: 100
+  - Type: 1
+    Score: 200
+  - Type: 2
+    Score: 50
   _ufoScore: 100
   _asteroidScore: 200
   _chipScore: 50

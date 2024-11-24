@@ -3,7 +3,7 @@ using UnityEngine;
 public class AsteroidManager : BaseEnemyManager, IEnemySpawner
 {
     [SerializeField] private FragmentManager _fragmentManager;
-
+    
     public void SpawnEnemy()
     {
         Entity enemy = _enemyPool.GetObject();
