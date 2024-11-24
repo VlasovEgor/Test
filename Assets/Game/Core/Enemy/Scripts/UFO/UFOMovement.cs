@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UFOMovement : MonoBehaviour
+public class UFOMovement : MonoBehaviour, IStopable
 {   
     [SerializeField] private Transform _transform;
     [SerializeField] protected float _speed = 5.0f;

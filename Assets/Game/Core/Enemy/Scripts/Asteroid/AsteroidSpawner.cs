@@ -1,46 +1,11 @@
 ﻿using UnityEngine;
 
-public class AsteroidSpawner: MonoBehaviour
+public class AsteroidSpawner: EnemySpawner
 {
-    [SerializeField] private float _minTimeBetweenSpawns = 1;
-    [SerializeField] private float _maxTimeBetweenSpawns = 2;
-
     [SerializeField] private AsteroidManager _asteroidManager;
 
-    private bool _gameOnPause;
-    private float _timeSinceLastSpawn;
-    private float _nextSpawnTime;
-
-    private void Start()
+    private void Awake()
     {
-        GameStateManager.Instance.GameStateChanged += OnGameStateChanged;
-        _nextSpawnTime = Random.Range(_minTimeBetweenSpawns, _maxTimeBetweenSpawns);
-    }
-
-    private void OnDestroy()
-    {
-        GameStateManager.Instance.GameStateChanged -= OnGameStateChanged;
-    }
-
-    private void OnGameStateChanged(GameState state)
-    {
-        _gameOnPause = state == GameState.PAUSE;
-    }
-
-    private void Update()
-    {
-        if (_gameOnPause)
-        {
-            return;
-        }
-
-        _timeSinceLastSpawn += Time.deltaTime;
-
-        if (_timeSinceLastSpawn >= _nextSpawnTime)
-        {
-            _asteroidManager.SpawnEnemy();
-            _timeSinceLastSpawn = 0;
-            _nextSpawnTime = Random.Range(_minTimeBetweenSpawns, _maxTimeBetweenSpawns);
-        }
+        _enemyManager = _asteroidManager;
     }
 }

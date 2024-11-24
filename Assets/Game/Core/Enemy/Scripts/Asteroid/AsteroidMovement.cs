@@ -1,8 +1,7 @@
-using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class AsteroidMovement : MonoBehaviour
+public class AsteroidMovement : MonoBehaviour, IStopable
 {
     [SerializeField] private Transform _transform;
     [SerializeField] protected float _speed = 5.0f;

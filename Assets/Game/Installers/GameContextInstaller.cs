@@ -1,10 +1,9 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 public class GameContextInstaller : MonoInstaller
 {   
-    [FormerlySerializedAs("_enemyManager")] [SerializeField] private UFOManager ufoManager;
+    [SerializeField] private UFOManager ufoManager;
     [SerializeField] private BulletManager _bulletManager;
     [SerializeField] private ScoreConfig _scoreConfig;
     

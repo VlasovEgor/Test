@@ -18,12 +18,12 @@ public class Score : IInitializable, IDisposable
     
     public void Initialize()
     {
-        _ufoManager.UFODead += AddUfoScore;
+       // _ufoManager.UFODead += AddUfoScore;
     }
 
     public void Dispose()
     {
-        _ufoManager.UFODead -= AddUfoScore;
+      //  _ufoManager.UFODead -= AddUfoScore;
     }
 
     private void AddUfoScore()
