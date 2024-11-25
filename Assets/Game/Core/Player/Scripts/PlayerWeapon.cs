@@ -1,12 +1,27 @@
+using System;
 using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour
-{
-    public int CurrentLaserShots => _lazerWeapon.CurrentLaserShots;
-    public float LaserRechargeTime => _lazerWeapon.LaserRechargeTime;
+{   
+    public event Action<float> LaserIsRecharging;
+    
+    public event Action<int> NumberLaserShotsHasChanged;
+    
     
     [SerializeField] private BulletWeapon _bulletWeapon;
     [SerializeField] private LazerWeapon _lazerWeapon;
+
+    private void Start()
+    {
+        _lazerWeapon.LaserIsRecharging += LaserIsRecharging;
+        _lazerWeapon.NumberShotsHasChanged += NumberLaserShotsHasChanged;
+    }
+
+    private void OnDestroy()
+    {
+        _lazerWeapon.LaserIsRecharging -= LaserIsRecharging;
+        _lazerWeapon.NumberShotsHasChanged -= NumberLaserShotsHasChanged;
+    }
 
     public void BulletAttack()
     {

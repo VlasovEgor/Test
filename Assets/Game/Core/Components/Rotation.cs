@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class Rotation : MonoBehaviour
 {
+    public event Action<float> RotationChanged; 
+    
     [SerializeField] private float _speed;
     [SerializeField] private Transform _transform;
 
@@ -20,6 +23,7 @@ public class Rotation : MonoBehaviour
        float rotationStep = -1* _currentInputValue * _speed * Time.deltaTime;
        
        _transform.Rotate(0f, 0f, rotationStep);
+       RotationChanged?.Invoke(transform.eulerAngles.z);
     }
     
 }

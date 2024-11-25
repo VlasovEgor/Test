@@ -4,7 +4,6 @@ using Zenject;
 public class PlayerMovement : MonoBehaviour
 {
     public Vector3 Position => _transform.position;
-    public float Rotation => _transform.eulerAngles.z;
     public float InstantaneousSpeed => _rigidbody.velocity.magnitude;
     
     [SerializeField] private Transform _transform;
@@ -35,5 +34,6 @@ public class PlayerMovement : MonoBehaviour
     public void Move()
     {
         _rigidbody.AddForce(transform.up * _speed);
+        
     }
 }

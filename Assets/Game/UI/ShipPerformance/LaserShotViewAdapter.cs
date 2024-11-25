@@ -1,6 +1,7 @@
-﻿using Zenject;
+﻿using System;
+using Zenject;
 
-public class LaserShotViewAdapter: ITickable
+public class LaserShotViewAdapter: IInitializable, IDisposable
 {
     private LaserShotView _laserShotView;
     private PlayerWeapon _weapon;
@@ -11,14 +12,20 @@ public class LaserShotViewAdapter: ITickable
         _laserShotView = laserShotView;
         _weapon = player.Get<PlayerWeapon>();
     }
-
-    public void Tick()
+    
+    public void Initialize()
     {
-        UpdateView();
+        _weapon.NumberLaserShotsHasChanged += UpdateView;
+    }
+
+    public void Dispose()
+    {
+        _weapon.NumberLaserShotsHasChanged -= UpdateView;
     }
     
-    private void UpdateView()
+    private void UpdateView(int value)
     {
-        _laserShotView.UpdateText(_weapon.CurrentLaserShots);
+        _laserShotView.UpdateText(value);
     }
+
 }

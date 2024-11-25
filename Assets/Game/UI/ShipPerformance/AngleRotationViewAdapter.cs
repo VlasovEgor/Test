@@ -1,24 +1,29 @@
-using Zenject;
+using System;using Zenject;
 
-public class AngleRotationViewAdapter: ITickable
+public class AngleRotationViewAdapter: IInitializable, IDisposable
 {
     private AngleRotationView _angleRotationView;
-    private PlayerMovement _playerMovement;
+    private Rotation _playerRotation;
     
     [Inject]
     private void Construct(AngleRotationView angleRotationView, Entity player)
     {
         _angleRotationView = angleRotationView;
-        _playerMovement = player.Get<PlayerMovement>();
+        _playerRotation = player.Get<Rotation>();
     }
     
-    public void Tick()
+    public void Initialize()
     {
-        UpdateView();
+        _playerRotation.RotationChanged += UpdateView;
+    }
+
+    public void Dispose()
+    {
+        _playerRotation.RotationChanged -= UpdateView;
     }
     
-    private void UpdateView()
+    private void UpdateView(float value)
     {
-        _angleRotationView.UpdateText(_playerMovement.Rotation);
+        _angleRotationView.UpdateText(value);
     }
 }

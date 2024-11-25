@@ -1,11 +1,12 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
 public class LazerWeapon : MonoBehaviour
-{  
-   public int CurrentLaserShots => _currentLaserShots;
-   public float LaserRechargeTime => GetRemainingLaserRechargeTime();
+{
+   public event Action<float> LaserIsRecharging;
+   public event Action<int> NumberShotsHasChanged;
    
    [SerializeField] private Transform _firePoint;
    [SerializeField] private LayerMask _enemyLayerMask;
@@ -45,6 +46,8 @@ public class LazerWeapon : MonoBehaviour
       
       _currentLaserShots--;
       _lastLaserShotTime = Time.time;
+      
+      NumberShotsHasChanged?.Invoke(_currentLaserShots);
    }
    
    private IEnumerator ExtendLaser()
@@ -98,6 +101,8 @@ public class LazerWeapon : MonoBehaviour
       {
          _currentLaserShots++;
          _lastLaserShotTime += _laserRechargeTime;
+         
+         NumberShotsHasChanged?.Invoke(_currentLaserShots);
       }
    }
 
@@ -108,6 +113,9 @@ public class LazerWeapon : MonoBehaviour
       float timeSinceLastShot = Time.time - _lastLaserShotTime;
       float remainingTime = _laserRechargeTime - timeSinceLastShot;
 
-      return remainingTime > 0 ? remainingTime : 0f;
+      remainingTime = remainingTime > 0 ? remainingTime : 0f;
+      LaserIsRecharging?.Invoke(remainingTime);
+      
+      return remainingTime;
    }
 }
