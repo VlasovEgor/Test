@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_levelBounds.InBounds(_transform.position) == false)
         {   
-            _transform.position = _levelBounds.NewPosition(_transform.position);
+            _transform.position = _levelBounds.NewMirroredPosition(_transform.position);
         }
     }
     

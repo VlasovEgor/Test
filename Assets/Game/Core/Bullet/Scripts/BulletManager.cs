@@ -49,7 +49,7 @@ public class BulletManager : MonoBehaviour
         {
             if (_levelBounds.InBounds(activeBullet[i].transform.position) == false)
             {
-                activeBullet[i].transform.position = _levelBounds.NewPosition(activeBullet[i].transform.position);
+                activeBullet[i].transform.position = _levelBounds.NewMirroredPosition(activeBullet[i].transform.position);
             }
         }
     }

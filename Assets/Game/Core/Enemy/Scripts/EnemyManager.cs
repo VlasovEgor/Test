@@ -49,7 +49,7 @@ public abstract class BaseEnemyManager : MonoBehaviour
             Vector3 position = activeEnemies[i].transform.position;
             if (_levelBounds.InBounds(position) == false)
             {
-                activeEnemies[i].transform.position = _levelBounds.NewPosition(position);
+                activeEnemies[i].transform.position = _levelBounds.NewMirroredPosition(position);
             }
         }
     }

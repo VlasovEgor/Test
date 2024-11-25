@@ -1,8 +1,15 @@
 using UnityEngine;
+using Zenject;
 
 public class UFOManager :  BaseEnemyManager, IEnemySpawner
 {
-    [SerializeField] private Entity _player;
+    private Entity _player;
+    
+    [Inject]
+    private void Construct(Entity player)
+    {
+        _player = player;
+    }
     
     public void SpawnEnemy()
     {

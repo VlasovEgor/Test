@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 public class BulletWeapon : MonoBehaviour
 {
@@ -8,8 +9,9 @@ public class BulletWeapon : MonoBehaviour
 
     private BulletManager _bulletManager;
     private bool _canFire = true;
-
-    public void SetBulletManager(BulletManager bulletManager)
+    
+    [Inject]
+    private void Construct(BulletManager bulletManager)
     {
         _bulletManager = bulletManager;
     }

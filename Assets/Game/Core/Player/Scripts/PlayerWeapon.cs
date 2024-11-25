@@ -8,14 +8,6 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private BulletWeapon _bulletWeapon;
     [SerializeField] private LazerWeapon _lazerWeapon;
 
-    [Space] [SerializeField] private int _maxLaserShots = 3;
-    [SerializeField] private float _laserRechargeTime = 2.0f;
-
-    public void SetBulletManager(BulletManager bulletManager)
-    {
-        _bulletWeapon.SetBulletManager(bulletManager);
-    }
-
     public void BulletAttack()
     {
         _bulletWeapon.TryAttack();

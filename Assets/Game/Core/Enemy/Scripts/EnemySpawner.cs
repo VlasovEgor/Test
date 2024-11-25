@@ -29,10 +29,7 @@ public abstract class EnemySpawner: MonoBehaviour
 
     private void Update()
     {
-        if (_gameOnPause)
-        {
-            return;
-        }
+        if (_gameOnPause) return;
 
         _timeSinceLastSpawn += Time.deltaTime;
 

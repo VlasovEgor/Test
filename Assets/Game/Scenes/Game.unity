@@ -559,10 +559,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _container: {fileID: 1066367697}
-  _enemyPoolInitSize: 10
+  _enemyPoolInitSize: 5
   _prefab: {fileID: 8308813036022649988, guid: 17985578be46a0846bb6be6298a6ce57, type: 3}
   _type: 1
-  _fragmentManager: {fileID: 935249642}
 --- !u!114 &265002780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -846,7 +845,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: 201757604187811891, guid: 5fe72886874b4e445b06cf777ca4920d, type: 3}
-  _initialSizePool: 30
+  _initialSizePool: 15
 --- !u!1 &369889504
 GameObject:
   m_ObjectHideFlags: 0
@@ -1323,10 +1322,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _container: {fileID: 178513672}
-  _enemyPoolInitSize: 10
+  _enemyPoolInitSize: 5
   _prefab: {fileID: 8308813036022649988, guid: 87fe189881a524806800482ac8eaaa83, type: 3}
   _type: 0
-  _player: {fileID: 7504658320458928191}
 --- !u!114 &562298206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1644,7 +1642,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _container: {fileID: 1043839712}
-  _enemyPoolInitSize: 10
+  _enemyPoolInitSize: 5
   _prefab: {fileID: 8308813036022649988, guid: 0824612d09a52ee47b73b55a9c982295, type: 3}
   _type: 2
   _maxAmountFragments: 3
@@ -3259,8 +3257,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletWeapon: {fileID: 423082184}
   _lazerWeapon: {fileID: 99265198}
-  _maxLaserShots: 3
-  _laserRechargeTime: 2
 --- !u!1 &5124159639061371021
 GameObject:
   m_ObjectHideFlags: 0

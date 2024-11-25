@@ -1,8 +1,15 @@
 using UnityEngine;
+using Zenject;
 
 public class AsteroidManager : BaseEnemyManager, IEnemySpawner
 {
-    [SerializeField] private FragmentManager _fragmentManager;
+    private FragmentManager _fragmentManager;
+    
+    [Inject]
+    private void Construct(FragmentManager fragmentManager)
+    {
+        _fragmentManager = fragmentManager;
+    }
     
     public void SpawnEnemy()
     {

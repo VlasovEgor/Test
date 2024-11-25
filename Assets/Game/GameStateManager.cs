@@ -14,8 +14,8 @@ public class GameStateManager
             return _instance;
         }
     }
- 
-    public GameState CurrentGameState { get; private set; }
+
+    private GameState CurrentGameState { get; set; }
     
     public event Action<GameState> GameStateChanged;
     
@@ -26,7 +26,6 @@ public class GameStateManager
  
         CurrentGameState = newGameState;
         GameStateChanged?.Invoke(newGameState);
-        Debug.Log("CURRENT STATE: " + newGameState);
     }
 }
 
@@ -35,6 +34,4 @@ public enum GameState
     NONE,
     START,
     PAUSE,
-    CONTINUE,
-    END
 }

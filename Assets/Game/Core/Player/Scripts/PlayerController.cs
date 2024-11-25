@@ -3,16 +3,14 @@ using Zenject;
 
 public sealed class PlayerController : IInitializable, IDisposable
 {
-    private BulletManager _bulletManager;
     private Entity _entity;
     private PlayerInput _input;
 
     [Inject]
-    private void Construct(PlayerInput playerInput, Entity player, BulletManager bulletManager)
+    private void Construct(PlayerInput playerInput, Entity player)
     {
         _input = playerInput;
         _entity = player;
-        _bulletManager = bulletManager;
     }
     
     public void Initialize()
@@ -22,8 +20,6 @@ public sealed class PlayerController : IInitializable, IDisposable
         
         _input.BulletFired += BulletPlayerFired;
         _input.LaserFired += OnLaserFired;
-        
-        _entity.Get<PlayerWeapon>().SetBulletManager(_bulletManager);
     }
 
     public void Dispose()

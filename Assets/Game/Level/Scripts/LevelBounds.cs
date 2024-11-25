@@ -23,8 +23,43 @@ public sealed class LevelBounds: IInitializable
     {
         return _bounds.Contains(position);
     }
+    
+    public Vector3 GetRandomPointOnBounds()
+    {
+        int side = Random.Range(0, 4);
 
-    public Vector3 NewPosition(Vector3 position)
+        switch (side)
+        {
+            case 0:
+                return new Vector3(
+                    Random.Range(_bounds.min.x, _bounds.max.x), 
+                    _bounds.max.y,                             
+                    0);                                        
+
+            case 1:
+                return new Vector3(
+                    Random.Range(_bounds.min.x, _bounds.max.x),
+                    _bounds.min.y,                              
+                    0);
+
+            case 2:
+                return new Vector3(
+                    _bounds.min.x,                             
+                    Random.Range(_bounds.min.y, _bounds.max.y),
+                    0);
+
+            case 3:
+                return new Vector3(
+                    _bounds.max.x,                              
+                    Random.Range(_bounds.min.y, _bounds.max.y),
+                    0);
+
+            default:
+                return Vector3.zero;
+        }
+    }
+
+    public Vector3 NewMirroredPosition(Vector3 position)
     {
         Vector3 newPosition = position;
         
@@ -40,39 +75,6 @@ public sealed class LevelBounds: IInitializable
         return min + (value - min + range) % range;
     }
     
-    public Vector3 GetRandomPointOnBounds()
-    {
-        int side = Random.Range(0, 4);
-
-        switch (side)
-        {
-            case 0: // Верхняя граница
-                return new Vector3(
-                    Random.Range(_bounds.min.x, _bounds.max.x), 
-                    _bounds.max.y,                             
-                    0);                                        
-
-            case 1: // Нижняя граница
-                return new Vector3(
-                    Random.Range(_bounds.min.x, _bounds.max.x),
-                    _bounds.min.y,                              
-                    0);
-
-            case 2: // Левая граница
-                return new Vector3(
-                    _bounds.min.x,                             
-                    Random.Range(_bounds.min.y, _bounds.max.y),
-                    0);
-
-            case 3: // Правая граница
-                return new Vector3(
-                    _bounds.max.x,                              
-                    Random.Range(_bounds.min.y, _bounds.max.y),
-                    0);
-
-            default:
-                return Vector3.zero;
-        }
-    }
+   
 
 }

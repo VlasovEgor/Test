@@ -17,15 +17,15 @@ public class AsteroidMovement : MonoBehaviour, IStopable
     {
         Move();
     }
-
-    private void ChoosingDirection()
-    {
-        _direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
-    }
-
+    
     public void Stop()
     {
         _speed = 0;
+    }
+    
+    private void ChoosingDirection()
+    {
+        _direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
     }
     
     private void Move()
